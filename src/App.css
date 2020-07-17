@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 
 .App {
   display: flex;
@@ -19,9 +19,11 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  font-size: 1.7em;
+  font-size: 1.3em;
   height: 100px;
+  width: 301px;
   padding: 0 10px;
+  word-break: break-all;
 }
 
 #numpad {

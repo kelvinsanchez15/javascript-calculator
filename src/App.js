@@ -76,11 +76,20 @@ function App() {
     // Handle equals button
     if (value === "=") {
       let cleanFormula = formula.replace(/[÷−×]/g, (e) => charsEquivalence[e]);
+      let result;
       if (endsWithOperator.test(cleanFormula)) {
-        setFormula(math.evaluate(cleanFormula.slice(0, -1)).toString());
+        result = math.evaluate(cleanFormula.slice(0, -1));
+        if (Math.ceil(Math.log10(result + 1)) > 9) {
+          result = result.toExponential(9);
+        }
+        setFormula(result.toString());
         return;
       }
-      setFormula(math.evaluate(cleanFormula).toString());
+      result = math.evaluate(cleanFormula);
+      if (Math.ceil(Math.log10(result + 1)) > 13) {
+        result = result.toExponential(9);
+      }
+      setFormula(result.toString());
       return;
     }
     // Handle initial state case
@@ -88,7 +97,10 @@ function App() {
       setFormula("".concat(value));
       return;
     }
-
+    // Handle max digit input
+    if (formula.length >= 28) {
+      return;
+    }
     setFormula(formula.concat(value));
   };
 
