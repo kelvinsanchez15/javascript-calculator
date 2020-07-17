@@ -19,29 +19,30 @@ const buttons = {
     { id: "equals", value: "=" },
   ],
   rightSide: [
-    { id: "clear", value: "CA" },
-    { id: "divide", value: "/" },
-    { id: "multiply", value: "*" },
-    { id: "subtract", value: "-" },
+    { id: "clear", value: "C" },
+    { id: "divide", value: "÷" },
+    { id: "multiply", value: "×" },
+    { id: "subtract", value: "−" },
     { id: "add", value: "+" },
   ],
 };
 
-const isOperator = /[*/+-]/;
+const isOperator = /[×÷+−]/;
 const endsWithOperator = /[*/+-]$/;
+const charsEquivalence = { "÷": "/", "×": "*", "−": "-" };
 
 function App() {
-  const [result, setResult] = useState("0");
+  const [formula, setFormula] = useState("0");
   const [lastClicked, setLastClicked] = useState("");
   const [decimalFunc, setDecimalFunc] = useState(true);
 
   const handleClick = (e) => {
-    let value = e.target.value;
+    let value = e.target.innerHTML;
     setLastClicked(value);
     // Handle decimal
     if (value === ".") {
       if (decimalFunc) {
-        setResult(result.concat(value));
+        setFormula(formula.concat(value));
         setDecimalFunc(false);
         return;
       }
@@ -52,64 +53,81 @@ function App() {
       setDecimalFunc(true);
     }
     // Handle "minus" cases
-    if (value === "-" && /[*/+]/.test(lastClicked)) {
-      setResult(result.concat(value));
+    if (value === "−" && /[×÷+]/.test(lastClicked)) {
+      setFormula(formula.concat(value));
       return;
     }
 
-    if (lastClicked === "-" && /[*/+]/.test(value)) {
-      setResult(result.slice(0, -2) + value);
+    if (lastClicked === "−" && /[×÷+]/.test(value)) {
+      setFormula(formula.slice(0, -2) + value);
       return;
     }
     // Handle operators
     if (isOperator.test(lastClicked) && isOperator.test(value)) {
-      setResult(result.slice(0, -1) + value);
+      setFormula(formula.slice(0, -1) + value);
       return;
     }
     // Handle clear button
-    if (value === "CA") {
-      setResult("0");
+    if (value === "C") {
+      setFormula("0");
       setDecimalFunc(true);
       return;
     }
     // Handle equals button
     if (value === "=") {
-      if (endsWithOperator.test(result)) {
-        setResult(math.evaluate(result.slice(0, -1)).toString());
+      let cleanFormula = formula.replace(/[÷−×]/g, (e) => charsEquivalence[e]);
+      if (endsWithOperator.test(cleanFormula)) {
+        setFormula(math.evaluate(cleanFormula.slice(0, -1)).toString());
         return;
       }
-      setResult(math.evaluate(result).toString());
+      setFormula(math.evaluate(cleanFormula).toString());
       return;
     }
     // Handle initial state case
-    if (result === "0") {
-      setResult("".concat(value));
+    if (formula === "0") {
+      setFormula("".concat(value));
       return;
     }
 
-    setResult(result.concat(value));
+    setFormula(formula.concat(value));
   };
 
   return (
     <div className="App">
-      <h1>JavaScript Calculator</h1>
-      <div id="display">{result}</div>
-      <div>the last clicked value is: {lastClicked}</div>
-      {buttons.leftSide.map(({ id, value }) => (
-        <Button key={id} id={id} value={value} handleClick={handleClick} />
-      ))}
-      {buttons.rightSide.map(({ id, value }) => (
-        <Button key={id} id={id} value={value} handleClick={handleClick} />
-      ))}
+      <div id="calculator-wrapper">
+        <div id="display">{formula}</div>
+        <div id="numpad">
+          <div id="grid-wrapper">
+            {buttons.leftSide.map(({ id, value }) => (
+              <Button
+                key={id}
+                id={id}
+                value={value}
+                handleClick={handleClick}
+              />
+            ))}
+          </div>
+          <div id="operators-wrapper">
+            {buttons.rightSide.map(({ id, value }) => (
+              <Button
+                key={id}
+                id={id}
+                value={value}
+                handleClick={handleClick}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 function Button({ id, value, handleClick }) {
   return (
-    <button id={id} value={value} onClick={handleClick}>
+    <div className="button" id={id} value={value} onClick={handleClick}>
       {value}
-    </button>
+    </div>
   );
 }
 

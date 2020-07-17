@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+
+.App {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+#calculator-wrapper {
+  background-color: #2d3033;
+  color: #dfe1e4;
+  font-size: 1.7em;
+  font-family: "Open Sans", sans-serif;
+}
+
+#display {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.7em;
+  height: 100px;
+  padding: 0 10px;
+}
+
+#numpad {
+  background-color: #202124;
+  display: flex;
+  align-items: center;
+}
+
+#grid-wrapper {
+  display: grid;
+  height: 400px;
+  grid-template-rows: 25% 25% 25% 25%;
+  grid-template-columns: 80px 80px 80px;
+}
+
+#operators-wrapper {
+  color: #82a9e9;
+  font-size: 0.8em;
+  padding: 5px 0;
+  border-left: 1px solid #2c2c2e;
+  display: grid;
+  grid-template-rows: 80px 80px 80px 80px 80px;
+  grid-template-columns: 80px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button:hover {
+  cursor: pointer;
+}
