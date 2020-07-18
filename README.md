@@ -6,6 +6,6 @@
 
 ## Additional Dependencies
 
-[Math.js](https://mathjs.org/).
+- [Math.js](https://mathjs.org/).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
