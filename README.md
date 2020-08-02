@@ -6,7 +6,7 @@
 
 ## Screenshot
 
-![FireShot Capture 035 - Javacript Calculator - kelvinsanchez15 github io](https://user-images.githubusercontent.com/4708484/89128472-d83fea00-d4c3-11ea-886b-d68abf4b7660.png)
+![FireShot Capture 035 - Javacript Calculator - kelvinsanchez15 github io 2](https://user-images.githubusercontent.com/4708484/89128514-189f6800-d4c4-11ea-8d0e-55b04bbae367.png)
 
 ## Additional Dependencies
 
